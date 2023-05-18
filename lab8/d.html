@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Print Words</title>
+</head>
+
+<body>
+    <h1>Print Words</h1>
+    <p>Enter a string consisting of several words separated by single spaces:</p>
+    <input type="text" id="inputString">
+    <button onclick="printWords()">Print Words</button>
+    <div id="output"></div>
+
+    <script>
+        function printWords() {
+            const str = document.getElementById("inputString").value;
+            const words = str.split(" ");
+            const outputDiv = document.getElementById("output");
+
+            // Clear the previous output
+            outputDiv.innerHTML = "";
+
+            for (let i = 0; i < words.length; i++) {
+                const wordElement = document.createElement("p");
+                const wordText = document.createTextNode(words[i]);
+                wordElement.appendChild(wordText);
+                outputDiv.appendChild(wordElement);
+            }
+        }
+    </script>
+</body>
+
+</html>

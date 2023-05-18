@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CabsOnline Booking</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <script src="booking.js"></script>
+</head>
+
+<body>
+  <h1>CabsOnline Booking</h1>
+  <form id="bookingForm" class="declaration">
+    <label for="cname">Customer Name: <span class="required">*</span></label>
+    <input type="text" id="cname" name="cname" required />
+
+    <label for="phone">Phone: <span class="required">*</span></label>
+    <input type="text" id="phone" name="phone" required />
+
+    <label for="unumber">Unit Number:</label>
+    <input type="text" id="unumber" name="unumber" />
+
+    <label for="snumber">Street Number: <span class="required">*</span></label>
+    <input type="text" id="snumber" name="snumber" required />
+
+    <label for="stname">Street Name: <span class="required">*</span></label>
+    <input type="text" id="stname" name="stname" required />
+
+    <label for="sbname">Suburb Name:</label>
+    <input type="text" id="sbname" name="sbname" />
+
+    <label for="dsbname">Destination Suburb Name:</label>
+    <input type="text" id="dsbname" name="dsbname" />
+
+    <label for="date">Pickup Date: <span class="required">*</span></label>
+    <input type="date" id="date" name="date" required />
+
+    <label for="time">Pickup Time: <span class="required">*</span></label>
+    <input type="time" id="time" name="time" required />
+
+    <input type="submit" value="Submit" onclick="submitBooking(event)" />
+  </form>
+  <div class="content-result"></div>
+</body>
+
+</html>

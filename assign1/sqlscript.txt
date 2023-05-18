@@ -1,0 +1,28 @@
+-- Create table if not exists
+CREATE TABLE IF NOT EXISTS status_posts ( id INT AUTO_INCREMENT PRIMARY KEY, status_code VARCHAR(5) UNIQUE NOT NULL, status TEXT NOT NULL, share ENUM('Public', 'Friends', 'Only Me') NOT NULL, date DATE NOT NULL, permissions TEXT );
+-- Insert a new status
+INSERT INTO
+   status_posts (status_code, status, share, date, permissions) 
+VALUES
+   (
+       ? , ? , ? , ? , ? 
+   )
+;
+-- Drop table if exists
+DROP TABLE IF EXISTS status_posts;
+-- Recreate table
+CREATE TABLE status_posts ( id INT AUTO_INCREMENT PRIMARY KEY, status_code VARCHAR(5) UNIQUE NOT NULL, status TEXT NOT NULL, share ENUM('Public', 'Friends', 'Only Me') NOT NULL, date DATE NOT NULL, permissions TEXT );
+-- Select all status_posts containing the search keyword
+SELECT
+   * 
+FROM
+   status_posts 
+WHERE
+   status LIKE '%$search%';
+-- Select the highest status code
+SELECT
+   status_code 
+FROM
+   status_posts 
+ORDER BY
+   status_code DESC LIMIT 1

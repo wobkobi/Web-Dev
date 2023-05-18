@@ -1,0 +1,188 @@
+/* Reset some default browser styles */
+html,
+body,
+h1,
+p,
+a {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-decoration: none;
+}
+body {
+  background-color: #1c1c1e;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+  padding-top: 2rem;
+}
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+ul {
+  list-style: disc;
+  text-align: center;
+}
+li {
+  margin-bottom: 10px;
+  text-align: left;
+}
+i {
+  /* bold */
+  font-weight: bold;
+}
+.button-link {
+  display: inline-block;
+  background-color: #3a3b3c;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  margin-right: 1rem;
+  /* Add this line to create horizontal spacing between the buttons */
+  transition: background-color 0.2s;
+  /* text bold */
+  font-weight: bold;
+}
+.declaration {
+  text-align: center;
+  margin-top: 2px;
+  /* Add margin-top to center the declaration text */
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+
+input[type="submit"] {
+  display: inline-block;
+  background-color: #3a3b3c;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  margin-right: 1rem;
+  /* Add this line to create horizontal spacing between the buttons */
+  transition: background-color 0.2s;
+  border: none;
+  /* Add this line to remove the default button border */
+  cursor: pointer;
+  /* Add this line to change the cursor to a pointer on hover */
+}
+input[type="submit"]:hover {
+  background-color: #545556;
+}
+.content-container {
+  width: 100%;
+  max-width: 500px;
+  background-color: #2d2d2d;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* Form styling */
+form {
+  width: 100%;
+  max-width: 500px;
+  background-color: #2d2d2d;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  margin: 1rem auto;
+  
+  flex-direction: column;
+
+}
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+form input[type="text"],
+form input[type="date"] {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+form textarea[name="status"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  height: 150px;
+  resize: none;
+  box-sizing: border-box;
+  /* Add this line to ensure proper width calculation */
+}
+form input[type="radio"],
+form input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+form input[type="text"],
+form input[type="date"],
+form textarea[name="status"],
+form input[type="radio"],
+form input[type="checkbox"],
+form label,
+form input[type="submit"] {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* submit bold */
+form input[type="submit"] {
+  font-weight: bold;
+}
+textarea[name="status"] {
+  height: 100px;
+  resize: vertical;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 15px;
+}
+
+.content-result {
+  width: 200px;
+  height: auto;
+  background-color: #2d2d2d;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.result-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.email-link {
+  color: #9dd1ff;
+}
+.email-link:hover {
+  color: #6ab0ff;
+}
+

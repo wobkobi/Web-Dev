@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Status</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <h1>Search Status</h1>
+  <form action="searchstatusprocess.php" method="GET">
+    <label for="Search">Search for a status:</label>
+    <textarea name="status" id="status" rows="2" required pattern="^[\w\s,.\-?!]+$"></textarea>
+    <br><br>
+    <input type="submit" value="Show Results">
+  </form>
+  <div class="button-container">
+    <p><a class="button-link" href="index.html">Return to Home Page</a></p>
+  </div>
+</body>
+
+</html>

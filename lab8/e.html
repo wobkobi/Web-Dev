@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function EmailRecord(name, email) {
+    this.name = name;
+    this.email = email;
+}
+
+EmailRecord.prototype.print = function () {
+    document.write(this.name + " | " + this.email + "<br>");
+};
+
+function EmailDatabase() {
+    this.records = [];
+}
+
+EmailDatabase.prototype.addRecord = function (record) {
+    this.records.push(record);
+};
+
+EmailDatabase.prototype.printDatabase = function () {
+    this.records.forEach((record) => record.print());
+};
+
+let db = new EmailDatabase();
+db.addRecord(new EmailRecord("John Doe", "john.doe@example.com"));
+db.addRecord(new EmailRecord("Jane Doe", "jane.doe@example.com"));
+db.addRecord(new EmailRecord("Bob Smith", "bob.smith@example.com"));
+
+db.printDatabase();
+</script>
+</head>
+<body>
+</body>
+</html>
