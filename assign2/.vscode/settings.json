@@ -1,3 +1,4 @@
 {
-    "php.version": "5.4.45"
+    "php.version": "5.4.45",
+    "livePreview.defaultPreviewPath": "/booking.html"
 }

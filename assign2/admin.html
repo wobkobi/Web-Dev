@@ -1,45 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CabsOnline Booking</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script src="admin.js"></script>
-  </head>
+<html>
 
-  <body>
-    <h1>CabsOnline Admin</h1>
-    <form class="admin-search" id="searchForm">
-      <label for="bsearch">Booking Reference Number</label>
-      <input
-        type="text"
-        id="bsearch"
-        name="bsearch"
-        placeholder="Booking Reference Number"
-      />
-      <input
-        type="button"
-        id="sbutton"
-        name="sbutton"
-        value="Search"
-        onclick="submitSearch()"
-      />
-    </form>
-    <div class="content">
-      <table class="admin-table" id="bookingTable">
-        <tr>
-          <th>Booking Reference Number</th>
-          <th>Customer Name</th>
-          <th>Phone</th>
-          <th>Pickup Suburb</th>
-          <th>Destination Suburb</th>
-          <th>Pickup Date and Time</th>
-          <th>Status</th>
-          <th>Assign</th>
-        </tr>
-        <!-- The table rows will be inserted dynamically using JavaScript -->
-      </table>
-    </div>
-  </body>
+<head>
+  <title>Admin Page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script src="admin.js"></script>
+  <link rel="icon" href="images/icon.gif" type="image/gif">
+</head>
+
+<body>
+  <h1>Admin Page</h1>
+  <form class="admin-search">
+    <label for="bsearch">Booking Search</label>
+    <input type="text" name="bsearch" id="bsearch">
+    <input type="submit" name="sbutton" value="Search" onclick="fetchBooking()">
+  </form>
+  <div class="content">
+    <table class="admin-table" id="bookingTable">
+      <!-- Table data goes here -->
+    </table>
+  </div>
+</body>
 </html>

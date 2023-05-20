@@ -1,6 +1,6 @@
 <?php
-require_once("../../conf/sqlinfo.inc.php");
-
+ob_start();
+require_once "../../conf/sqlinfo.inc.php";
 // Create connection
 $conn = new mysqli($host, $username, $password, $database);
 
@@ -24,13 +24,17 @@ $sql = "CREATE TABLE IF NOT EXISTS BookingRequests (
     booking_status VARCHAR(50) DEFAULT 'unassigned'
 )";
 
-if ($conn->query($sql) === TRUE) {
+if ($conn->query($sql) === true) {
   echo "Table BookingRequests created successfully";
 } else {
   echo "Error creating table: " . $conn->error;
 }
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $stmt = $conn->prepare("INSERT INTO BookingRequests (cname, phone, unumber, snumber, stname, sbname, dsbname, pickup_date, pickup_time)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    
+  $stmt->bind_param("sssssssss", $cname, $phone, $unumber, $snumber, $stname, $sbname, $dsbname, $pickup_date, $pickup_time);
+
   $cname = $_POST['cname'];
   $phone = $_POST['phone'];
   $unumber = $_POST['unumber'];
@@ -41,22 +45,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $pickup_date = $_POST['date'];
   $pickup_time = $_POST['time'];
 
-  $sql = "INSERT INTO BookingRequests (cname, phone, unumber, snumber, stname, sbname, dsbname, pickup_date, pickup_time)
-    VALUES ('$cname', '$phone', '$unumber', '$snumber', '$stname', '$sbname', '$dsbname', '$pickup_date', '$pickup_time')";
-
-  if ($conn->query($sql) === TRUE) {
-    $last_id = $conn->insert_id;
+  if ($stmt->execute()) {
+    $last_id = $stmt->insert_id;
     $booking_ref = "BRN" . str_pad($last_id, 5, "0", STR_PAD_LEFT);
 
-    $sql = "UPDATE BookingRequests SET booking_ref='$booking_ref' WHERE id=$last_id";
-    if ($conn->query($sql) === TRUE) {
-      echo $booking_ref;
+    $stmt = $conn->prepare("UPDATE BookingRequests SET booking_ref=? WHERE id=?");
+    $stmt->bind_param("si", $booking_ref, $last_id);
+
+    if ($stmt->execute()) {
+      ob_end_clean();
+      echo json_encode(['booking_ref' => $booking_ref, 'pickup_date' => $pickup_date, 'pickup_time' => $pickup_time]);
     } else {
       echo "Error: " . $sql . "<br>" . $conn->error;
     }
   } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
+
+  $stmt->close();
 }
 
 $conn->close();

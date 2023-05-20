@@ -3,45 +3,65 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CabsOnline Booking</title>
-  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <link rel="stylesheet" type="text/css" href="styles.css">
   <script src="booking.js"></script>
+  <link rel="icon" href="images/icon.gif" type="image/gif">
 </head>
+<script>
+ window.onload = function() {
+  const now = new Date();
+  
+  // Get date and time elements
+  const dateInput = document.querySelector('#date');
+  const timeInput = document.querySelector('#time');
+
+  // Format date and time
+  let year = now.getFullYear();
+  let month = ("0" + (now.getMonth() + 1)).slice(-2);
+  let date = ("0" + now.getDate()).slice(-2);
+  let hours = ("0" + now.getHours()).slice(-2);
+  let minutes = ("0" + now.getMinutes()).slice(-2);
+  
+  // Set date and time in inputs
+  dateInput.value = `${year}-${month}-${date}`;
+  timeInput.value = `${hours}:${minutes}`;
+
+  const form = document.querySelector('#bookingForm');
+
+  // Attach an event listener for the submit event
+  form.addEventListener('submit', submitBooking);
+}
+
+</script>
 
 <body>
   <h1>CabsOnline Booking</h1>
   <form id="bookingForm" class="declaration">
     <label for="cname">Customer Name: <span class="required">*</span></label>
-    <input type="text" id="cname" name="cname" required />
-
+    <input type="text" id="cname" name="cname" required>
     <label for="phone">Phone: <span class="required">*</span></label>
-    <input type="text" id="phone" name="phone" required />
-
+    <input type="text" id="phone" name="phone" required>
     <label for="unumber">Unit Number:</label>
-    <input type="text" id="unumber" name="unumber" />
-
+    <input type="text" id="unumber" name="unumber">
     <label for="snumber">Street Number: <span class="required">*</span></label>
-    <input type="text" id="snumber" name="snumber" required />
-
+    <input type="text" id="snumber" name="snumber" required>
     <label for="stname">Street Name: <span class="required">*</span></label>
-    <input type="text" id="stname" name="stname" required />
-
+    <input type="text" id="stname" name="stname" required>
     <label for="sbname">Suburb Name:</label>
-    <input type="text" id="sbname" name="sbname" />
-
+    <input type="text" id="sbname" name="sbname">
     <label for="dsbname">Destination Suburb Name:</label>
-    <input type="text" id="dsbname" name="dsbname" />
-
+    <input type="text" id="dsbname" name="dsbname">
     <label for="date">Pickup Date: <span class="required">*</span></label>
-    <input type="date" id="date" name="date" required />
-
+    <input type="date" id="date" name="date" required>
     <label for="time">Pickup Time: <span class="required">*</span></label>
-    <input type="time" id="time" name="time" required />
-
-    <input type="submit" value="Submit" onclick="submitBooking(event)" />
+    <input type="time" id="time" name="time" required>
+    <input type="submit" value="Submit">
   </form>
-  <div class="content-result"></div>
+  <div id="leftImage"></div>
+  <div id="rightImage"></div>
+  <div id="reference" class="content-result" hidden></div>
 </body>
 
 </html>

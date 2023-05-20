@@ -1,82 +1,71 @@
-const inputNames = [
-  "cname",
-  "phone",
-  "unumber",
-  "snumber",
-  "stname",
-  "sbname",
-  "dsbname",
-  "pickup_date",
-  "pickup_date",
-];
+const input = ["cname", "phone", "unumber", "snumber", "stname", "sbname", "dsbname", "date", "time"];
 
 function validate() {
-  const phone = document.querySelector('input[name="phone"]').value;
+  let name = document.querySelector('input[name="cname"]').value;
+  let phone = document.querySelector('input[name="phone"]').value;
+  let unumber = document.querySelector('input[name="unumber"]').value;
+  let snumber = document.querySelector('input[name="snumber"]').value;
+  let stname = document.querySelector('input[name="stname"]').value;
+  let sbname = document.querySelector('input[name="sbname"]').value;
+  let dsbname = document.querySelector('input[name="dsbname"]').value;
   const date = document.querySelector('input[name="date"]').value;
   const time = document.querySelector('input[name="time"]').value;
-
+  // if these fields dont have data alert
+  if (!name || !phone || !snumber || !stname || !date || !time) {
+    alert("Please fill in all required fields");
+    return false;
+  }
+  const nonAlphanumericRegex = /[^a-z0-9 \-]/gi;
   const phoneRegex = /^\d{10,12}$/;
   const now = new Date();
-  // combine date and time
-
   const inputDate = new Date(`${date}T${time}`);
-
+  // if required feilds arent filled alert
   if (!phoneRegex.test(phone)) {
-    alert("Phone number must be all numbers with length between 10-12.");
+    alert("Invalid phone number. Please enter a 10-digit phone number");
     return false;
   }
   // date valiated
   if (now > inputDate) {
-    alert("Date must be in the future.");
+    alert("Pickup date and time must not be earlier than current date and time");
     return false;
   }
+  name = name.replace(nonAlphanumericRegex, '');
+  unumber = unumber.replace(nonAlphanumericRegex, '');
+  snumber = snumber.replace(nonAlphanumericRegex, '');
+  stname = stname.replace(nonAlphanumericRegex, '');
+  sbname = sbname.replace(nonAlphanumericRegex, '');
+  dsbname = dsbname.replace(nonAlphanumericRegex, '');
+  document.querySelector('input[name="cname"]').value = name;
+  document.querySelector('input[name="unumber"]').value = unumber;
+  document.querySelector('input[name="snumber"]').value = snumber;
+  document.querySelector('input[name="stname"]').value = stname;
+  document.querySelector('input[name="sbname"]').value = sbname;
+  document.querySelector('input[name="dsbname"]').value = dsbname;
   return true;
 }
 
 function submitBooking(e) {
-  e.preventDefault();
-
+  if (e) e.preventDefault();
   if (!validate()) return;
-
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", "booking_requests.php", true);
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-  const formData = new FormData(document.querySelector("#bookingForm"));
-
-  // foreach entry in formData, append to requestBody
+  xhr.open('POST', 'booking.php', true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  const formData = new FormData(document.querySelector('#bookingForm'));
   const requestBody = new URLSearchParams([...formData.entries()]).toString();
-
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      // Assume server returns a JSON response with bookingid, pickupTime, and pickupDate
       const response = JSON.parse(xhr.responseText);
-
-      // Convert the pickup date to the DD/MM/YYYY format
-      const pickupDateArray = response.pickupDate.split('-');
-      const formattedPickupDate = pickupDateArray[2] + '/' + pickupDateArray[1] + '/' + pickupDateArray[0];
-
-      // Call changeContent with the booking ID, pickup time and formatted pickup date from the server response
-      changeContent(response.bookingid, response.pickupTime, formattedPickupDate);
+      changeContent(response);
     }
   };
-
   xhr.send(requestBody);
 }
 
-
-function changeContent(bookingid, pickupTime, pickupDate) {
-  const contentDiv = document.querySelector('#content');
-  contentDiv.innerHTML = ""; // make sure it's empty
-  let header = "<h1>Booking Successful!</h1>";
-  let thankYouMessage = "<p>Thank you for your booking!</p>";
-  let bookingIdMessage = "<p id='reference'>Booking reference number: " + bookingid + "</p>";
-  let pickupTimeMessage = "<p>Pickup time: " + pickupTime + "</p>";
-  let pickupDateMessage = "<p>Pickup date: " + pickupDate + "</p>";
-
-  contentDiv.insertAdjacentHTML("afterbegin", header);
-  contentDiv.insertAdjacentHTML("beforeend", thankYouMessage);
-  contentDiv.insertAdjacentHTML("beforeend", bookingIdMessage);
-  contentDiv.insertAdjacentHTML("beforeend", pickupTimeMessage);
-  contentDiv.insertAdjacentHTML("beforeend", pickupDateMessage);
+function changeContent(res) {
+  const ref = res.booking_ref;
+  const date = new Date(res.pickup_date);
+  const time = res.pickup_time;
+  let formattedDate = date.getDate().toString().padStart(2, '0') + '/' + (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getFullYear();
+  document.getElementById("reference").innerHTML = "<h2>Thank you for your booking!</h1><p>Booking reference number: " + ref + "</p><p>Pickup time: " + time + "</p><p>Pickup date: " + formattedDate + "</p>";
+  document.getElementById("reference").removeAttribute('hidden');
 }
