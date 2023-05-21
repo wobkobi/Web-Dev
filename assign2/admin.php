@@ -1,40 +1,65 @@
 <?php
 require_once "../../conf/sqlinfo.inc.php";
 
+// Get the database connection
 $conn = new mysqli($host, $username, $password, $database);
 
+// Check if the connection was successful
 if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
-if (isset($_GET['bsearch'])) {
-  $bsearch = $conn->real_escape_string($_GET['bsearch']);
+// Handle the search request
+if (isset($_GET["bsearch"])) {
+    $bsearch = $_GET["bsearch"];
 
-  if (!empty($bsearch)) {
-    $query = "SELECT * FROM bookings WHERE reference = '$bsearch'";
-  } else {
-    $query = "SELECT * FROM bookings WHERE pickupTime >= NOW() AND pickupTime < DATE_ADD(NOW(), INTERVAL 2 HOUR) AND status = 'unassigned'";
-  }
-  
-  $result = $conn->query($query);
+    // Validate the booking reference number format
+    if (!empty($bsearch) && !preg_match("/^BRN\d{5}$/", $bsearch)) {
+        die("Invalid booking reference number format");
+    }
 
-  $bookings = array();
-  while ($row = $result->fetch_assoc()) {
-    $bookings[] = $row;
-  }
-  
-  echo json_encode($bookings);
+    // Prepare the SQL query
+    $sql = "SELECT * FROM BookingRequests WHERE ";
+    if (empty($bsearch)) {
+        $sql .= "pickup_date >= CURDATE() AND pickup_time >= CURTIME() AND ";
+    } else {
+        $sql .= "booking_ref = '$bsearch' AND ";
+    }
+    $sql .=
+        "booking_status IN ('unassigned', 'assigned') ORDER BY pickup_date, pickup_time";
 
-} elseif (isset($_GET['assign'])) {
-  $assign = $conn->real_escape_string($_GET['assign']);
-  $query = "UPDATE bookings SET status = 'assigned' WHERE reference = '$assign'";
-  
-  if ($conn->query($query) === TRUE) {
-    echo "Record updated successfully";
-  } else {
-    echo "Error updating record: " . $conn->error;
-  }
+    // Execute the query
+    // Execute the query
+    $result = $conn->query($sql);
+
+    // Check if any results were found
+    if ($result->num_rows > 0) {
+        $resultsArray = [];
+        while ($row = $result->fetch_assoc()) {
+            $resultsArray[] = $row;
+        }
+        echo json_encode($resultsArray);
+    } else {
+        echo json_encode(["error" => "Booking not found"]);
+    }
 }
 
+// Handle the assignment request
+if (isset($_GET["assign"])) {
+    $assignRef = $_GET["assign"];
+
+    // Update the booking status in the database
+    $sql = "UPDATE BookingRequests SET booking_status = 'assigned' WHERE booking_ref = '$assignRef'";
+
+    if ($conn->query($sql) === true) {
+        echo "Congratulations! Booking request " .
+            $assignRef .
+            " has been assigned!";
+    } else {
+        echo "Error assigning booking request: " . $conn->error;
+    }
+}
+
+// Close the database connection
 $conn->close();
 ?>

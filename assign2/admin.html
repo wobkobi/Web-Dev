@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CabsOnline Admin Page</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="icon" href="images/icon.gif" type="image/gif" />
+  </head>
 
-<head>
-  <title>Admin Page</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <script src="admin.js"></script>
-  <link rel="icon" href="images/icon.gif" type="image/gif">
-</head>
-
-<body>
-  <h1>Admin Page</h1>
-  <form class="admin-search">
-    <label for="bsearch">Booking Search</label>
-    <input type="text" name="bsearch" id="bsearch">
-    <input type="submit" name="sbutton" value="Search" onclick="fetchBooking()">
-  </form>
-  <div class="content">
-    <table class="admin-table" id="bookingTable">
-      <!-- Table data goes here -->
-    </table>
-  </div>
-</body>
+  <body>
+    <h1>CabsOnline Admin Panel</h1>
+    <div>
+      <form id="searchForm" class="admin-search">
+        <label for="bsearch"> Booking Reference: </label>
+        <input type="text" id="bsearch" name="bsearch" placeholder="BRN00001" />
+        <button type="submit" id="searchBtn">Search</button>
+      </form>
+    </div>
+    <div class="content">
+      <!-- The search results will be displayed here -->
+    </div>
+    <script src="admin.js" defer></script>
+  </body>
 </html>

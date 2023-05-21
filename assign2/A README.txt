@@ -1,25 +1,25 @@
-README
+System Files:
+- admin.html
+- admin.js
+- admin.php
+- booking.html
+- booking.js
+- booking.php
+- styles.css
+- images/icon.gif
 
-FILE LIST:
+Instructions:
+1. CabsOnline Admin Panel:
+   - Open the `admin.html` file in a web browser to access the CabsOnline Admin Panel.
+   - Use the search form to search for booking details by entering a valid booking reference number.
+   - Click the "Search" button to retrieve the search results.
+   - The search results will be displayed in a table with booking details.
+   - If a booking is unassigned, you can click the "Assign" button to assign it.
 
-1. booking.html - Main booking form
-2. booking.php - Server-side processing for booking requests
-3. booking.js - Client-side processing and AJAX requests for booking form
-4. admin.html - Administration page for viewing and assigning bookings
-5. admin.php - Server-side processing for administration tasks
-6. admin.js - Client-side processing and AJAX requests for admin page
-7. conf/assign2.php - Database connection configuration
-8. styles.css - Stylesheet for the application
-9. readme.txt - This file
-
-USAGE INSTRUCTIONS:
-
-1. Open `booking.html` in a web browser to access the booking form.
-2. Fill out the form fields and click "Submit" to create a new booking. 
-   If successful, you will see a booking reference number, pickup date and time.
-3. Open `admin.html` in a web browser to access the admin page.
-4. Here you can search for a booking by its reference number using the search bar and "Search" button.
-5. If the search bar is left empty, it will return all bookings within the next 2 hours.
-6. Click "Assign" next to a booking to assign it. The status of the booking will be updated to "Assigned".
-
-Note: To connect to a different database, edit the `$host`, `$user`, `$password`, and `$dbName` variables in `conf/assign2.php`.
+2. CabsOnline Booking:
+   - Open the `booking.html` file in a web browser to access the CabsOnline Booking page.
+   - Fill in all the required fields in the booking form, including customer name, phone number, pickup address, destination address, pickup date, and pickup time.
+   - Ensure that the phone number is in the format xxx-xxxxxxxx (e.g., 123-12345678).
+   - The pickup date and time should not be earlier than the current date and time.
+   - Click the "Submit" button to submit the booking.
+   - After successful submission, a confirmation message will be displayed with the booking reference number, pickup time, and pickup date.
