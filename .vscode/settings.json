@@ -1,5 +1,7 @@
 {
-    "php.version": "8.2.3",
+    "php.validate.executablePath": "C:/php/5.4.45/php.exe",
+    "php.debug.executablePath": "C:/php/5.4.45/php.exe",
+    "php.version": "5.4.45",
     "livePreview.defaultPreviewPath": "/assign1/searchstatusform.html",
     "discord.enabled": true
 }

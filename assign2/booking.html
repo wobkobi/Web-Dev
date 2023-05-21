@@ -9,32 +9,6 @@
   <script src="booking.js"></script>
   <link rel="icon" href="images/icon.gif" type="image/gif">
 </head>
-<script>
- window.onload = function() {
-  const now = new Date();
-  
-  // Get date and time elements
-  const dateInput = document.querySelector('#date');
-  const timeInput = document.querySelector('#time');
-
-  // Format date and time
-  let year = now.getFullYear();
-  let month = ("0" + (now.getMonth() + 1)).slice(-2);
-  let date = ("0" + now.getDate()).slice(-2);
-  let hours = ("0" + now.getHours()).slice(-2);
-  let minutes = ("0" + now.getMinutes()).slice(-2);
-  
-  // Set date and time in inputs
-  dateInput.value = `${year}-${month}-${date}`;
-  timeInput.value = `${hours}:${minutes}`;
-
-  const form = document.querySelector('#bookingForm');
-
-  // Attach an event listener for the submit event
-  form.addEventListener('submit', submitBooking);
-}
-
-</script>
 
 <body>
   <h1>CabsOnline Booking</h1>
@@ -57,7 +31,7 @@
     <input type="date" id="date" name="date" required>
     <label for="time">Pickup Time: <span class="required">*</span></label>
     <input type="time" id="time" name="time" required>
-    <input type="submit" value="Submit">
+    <input type="submit" id="submit" value="Submit">
   </form>
   <div id="leftImage"></div>
   <div id="rightImage"></div>
