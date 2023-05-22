@@ -25,10 +25,8 @@ if (isset($_GET["bsearch"])) {
     } else {
         $sql .= "booking_ref = '$bsearch' AND ";
     }
-    $sql .=
-        "booking_status IN ('unassigned', 'assigned') ORDER BY pickup_date, pickup_time";
+    $sql .= "booking_status IN ('unassigned', 'assigned') ORDER BY pickup_date, pickup_time";
 
-    // Execute the query
     // Execute the query
     $result = $conn->query($sql);
 
@@ -52,9 +50,7 @@ if (isset($_GET["assign"])) {
     $sql = "UPDATE BookingRequests SET booking_status = 'assigned' WHERE booking_ref = '$assignRef'";
 
     if ($conn->query($sql) === true) {
-        echo "Congratulations! Booking request " .
-            $assignRef .
-            " has been assigned!";
+        echo "Congratulations! Booking request " . $assignRef . " has been assigned!";
     } else {
         echo "Error assigning booking request: " . $conn->error;
     }
