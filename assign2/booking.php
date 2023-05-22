@@ -5,7 +5,7 @@ require_once "../../conf/sqlinfo.inc.php";
 $conn = new mysqli($host, $username, $password, $database);
 
 if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
 $sql = "CREATE TABLE IF NOT EXISTS BookingRequests (
@@ -25,14 +25,15 @@ $sql = "CREATE TABLE IF NOT EXISTS BookingRequests (
 )";
 
 if ($conn->query($sql) === true) {
-  echo "Table BookingRequests created successfully";
+    echo "Table BookingRequests created successfully";
 } else {
-  echo "Error creating table: " . $conn->error;
+    echo "Error creating table: " . $conn->error;
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $stmt = $conn->prepare("INSERT INTO BookingRequests (cname, phone, unumber, snumber, stname, sbname, dsbname, pickup_date, pickup_time)
+    $stmt = $conn->prepare("INSERT INTO BookingRequests (cname, phone, unumber, snumber, stname, sbname, dsbname, pickup_date, pickup_time)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+<<<<<<< HEAD
   $stmt->bind_param(
     "sssssssss",
     $cname,
@@ -78,8 +79,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
+=======
+    $stmt->bind_param(
+        "sssssssss",
+        $cname,
+        $phone,
+        $unumber,
+        $snumber,
+        $stname,
+        $sbname,
+        $dsbname,
+        $pickup_date,
+        $pickup_time
+    );
 
-  $stmt->close();
+    $cname = $_POST["cname"];
+    $phone = $_POST["phone"];
+    $unumber = $_POST["unumber"];
+    $snumber = $_POST["snumber"];
+    $stname = $_POST["stname"];
+    $sbname = $_POST["sbname"];
+    $dsbname = $_POST["dsbname"];
+    $pickup_date = $_POST["date"];
+    $pickup_time = $_POST["time"];
+
+    if ($stmt->execute()) {
+        $last_id = $stmt->insert_id;
+        $booking_ref = "BRN" . str_pad($last_id, 5, "0", STR_PAD_LEFT);
+>>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
+
+        $stmt = $conn->prepare(
+            "UPDATE BookingRequests SET booking_ref=? WHERE id=?"
+        );
+        $stmt->bind_param("si", $booking_ref, $last_id);
+
+        if ($stmt->execute()) {
+            ob_end_clean();
+            echo json_encode([
+                "booking_ref" => $booking_ref,
+                "pickup_date" => $pickup_date,
+                "pickup_time" => $pickup_time,
+            ]);
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $stmt->close();
 }
 
 $conn->close();
