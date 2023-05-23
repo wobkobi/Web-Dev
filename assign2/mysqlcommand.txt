@@ -1,59 +1,14 @@
-admin.php:
-
-- Create a MySQL connection:
-  $conn = new mysqli($host, $username, $password, $database);
-
-- Handle the search request:
-  - Get the booking reference number from the request: $bsearch = $_GET["bsearch"];
-  - Validate the booking reference number format: if (!empty($bsearch) && !preg_match("/^BRN\d{5}$/", $bsearch))
-  - Prepare the SQL query:
-    $sql = "SELECT * FROM BookingRequests WHERE ";
-    if (empty($bsearch)) {
-        $sql .= "pickup_date >= CURDATE() AND pickup_time >= CURTIME() AND ";
-    } else {
-        $sql .= "booking_ref = '$bsearch' AND ";
-    }
-    $sql .= "booking_status IN ('unassigned', 'assigned') ORDER BY pickup_date, pickup_time";
-
-- Execute the SQL query and fetch results:
-  $result = $conn->query($sql);
-
-- Handle the assignment request:
-  - Get the booking reference number to assign: $assignRef = $_GET["assign"];
-  - Update the booking status in the database:
-    $sql = "UPDATE BookingRequests SET booking_status = 'assigned' WHERE booking_ref = '$assignRef'";
-
-- Close the MySQL connection:
-  $conn->close();
-
-
-booking.php:
-
-- Create a MySQL connection:
-  $conn = new mysqli($host, $username, $password, $database);
-
-- Handle the form submission:
-  - Get the input values from the form:
-    $cname = $_POST["cname"];
-    $phone = $_POST["phone"];
-    $unumber = $_POST["unumber"];
-    $snumber = $_POST["snumber"];
-    $stname = $_POST["stname"];
-    $sbname = $_POST["sbname"];
-    $dsbname = $_POST["dsbname"];
-    $date = $_POST["date"];
-    $time = $_POST["time"];
-  - Prepare the SQL query:
-    $sql = "INSERT INTO BookingRequests (cname, phone, unumber, snumber, stname, sbname, dsbname, pickup_date, pickup_time, booking_status) VALUES ('$cname', '$phone', '$unumber', '$snumber', '$stname', '$sbname', '$dsbname', '$date', '$time', 'unassigned')";
-
-- Execute the SQL query:
-  $result = $conn->query($sql);
-
-- Get the generated booking reference number:
-  $bookingRef = $conn->insert_id;
-
-- Retrieve the inserted booking details from the database:
-  $sql = "SELECT * FROM BookingRequests WHERE booking_ref = '$bookingRef'";
-
-- Close the MySQL connection:
-  $conn->close();
+CREATE TABLE IF NOT EXISTS BookingRequests (
+    booking_ref VARCHAR(8) PRIMARY KEY,
+    cname VARCHAR(100) NOT NULL,
+    phone VARCHAR(12) NOT NULL,
+    unumber VARCHAR(100),
+    snumber VARCHAR(100) NOT NULL,
+    stname VARCHAR(100) NOT NULL,
+    sbname VARCHAR(100),
+    dsbname VARCHAR(100),
+    pickup_date DATE NOT NULL,
+    pickup_time TIME NOT NULL,
+    booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    booking_status VARCHAR(50) DEFAULT 'unassigned'
+)";
