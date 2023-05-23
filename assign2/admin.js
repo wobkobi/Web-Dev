@@ -1,19 +1,21 @@
-window.onload = searchEmptyBooking;
-
-function searchBooking(e) {
-  if (e) e.preventDefault();
-  const searchInput = document.getElementById("bsearch").value;
-  // Check if search input is empty
-  if (searchInput.trim() === "") {
+// Function to handle form submission
+function submitSearch(e) {
+  e.preventDefault();
+  const searchInput = document.getElementById("bsearch").value.trim();
+  if (searchInput === "") {
+    history.pushState({}, "", "admin.html");
     searchEmptyBooking();
   } else {
-    searchBookingByReference(searchInput);
+    const url = `admin.html?bsearch=${searchInput}`;
+    window.location.href = url;
   }
+  document.getElementById("bsearch").value = "";
 }
 
+// Function to fetch bookings when search input is empty
 function searchEmptyBooking() {
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", "admin.php?bsearch=", true);
+  xhr.open("GET", "admin.php?bsearch=&status=unassigned&time=2hours", true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
       const response = JSON.parse(xhr.responseText);
@@ -23,6 +25,7 @@ function searchEmptyBooking() {
   xhr.send();
 }
 
+// Function to fetch bookings by reference number
 function searchBookingByReference(reference) {
   if (!/^BRN\d{5}$/.test(reference)) {
     alert("Invalid booking reference number format. Example: BRN00001");
@@ -39,6 +42,7 @@ function searchBookingByReference(reference) {
   xhr.send();
 }
 
+// Function to display search results
 function displaySearchResults(data) {
   const searchInput = document.getElementById("bsearch");
   const searchValue = searchInput.value;
@@ -65,7 +69,8 @@ function displaySearchResults(data) {
       <tr>
         <td colspan="8">No bookings found.</td>
       </tr>`;
-  } else {
+  }
+  else {
     data.forEach(function (booking) {
       const inputDate = new Date(`${booking.pickup_date}T${booking.pickup_time}`);
       const formattedDate = inputDate.toLocaleDateString("en-NZ", {
@@ -108,16 +113,17 @@ function displaySearchResults(data) {
   searchInput.value = searchValue;
 }
 
-function assignBooking(event) {
-  const bookingRef = event.target.dataset.ref;
+// Function to handle booking assignment
+function assignBooking(e) {
+  const bookingRef = e.target.dataset.ref;
   const xhr = new XMLHttpRequest();
   xhr.open("GET", "admin.php?assign=" + bookingRef, true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
       const response = xhr.responseText;
       showConfirmation(response);
-      event.target.disabled = true;
-      const statusCell = event.target.parentNode.previousElementSibling;
+      e.target.disabled = true;
+      const statusCell = e.target.parentNode.previousElementSibling;
       statusCell.textContent = "assigned";
     }
     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 400) {
@@ -128,6 +134,7 @@ function assignBooking(event) {
   xhr.send();
 }
 
+// Function to display success message
 function showConfirmation(message) {
   const confirmationDiv = document.createElement("div");
   confirmationDiv.classList.add("success-message");
@@ -136,6 +143,7 @@ function showConfirmation(message) {
   contentDiv.insertBefore(confirmationDiv, contentDiv.firstChild);
 }
 
+// Function to display error message
 function showError(message) {
   const errorDiv = document.createElement("div");
   errorDiv.classList.add("error-message");
@@ -144,15 +152,16 @@ function showError(message) {
   contentDiv.insertBefore(errorDiv, contentDiv.firstChild);
 }
 
-function submitSearch(event) {
-  event.preventDefault();
-  const searchInput = document.getElementById("bsearch").value.trim();
-  if (searchInput === "") {
-    searchEmptyBooking();
+// Function to load initial search results
+function load() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const bookingReference = urlParams.get('bsearch');
+  if (bookingReference) {
+    searchBookingByReference(bookingReference);
   } else {
-    const url = `admin.html?bsearch=${searchInput}`;
-    window.location.href = url;
+    searchEmptyBooking();
   }
-
-  document.getElementById("bsearch").value = ""; // Clear the search field
 }
+
+// Register the load function to be executed when the window is loaded
+window.onload = load;

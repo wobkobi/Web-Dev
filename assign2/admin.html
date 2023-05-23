@@ -13,7 +13,8 @@
 <body>
   <h1>CabsOnline Admin Panel</h1>
   <div>
-    <form id="searchForm" class="admin-search">
+    <form id="searchForm" class="admin-search" onsubmit="submitSearch(event);">
+      <!-- Form for search input -->
       <label for="bsearch">Booking Reference:</label>
       <input type="text" id="bsearch" name="bsearch" placeholder="BRN00001" />
       <input type="button" id="sbutton" value="Search" onclick="submitSearch(event)" />
@@ -35,16 +36,6 @@
     </table>
   </div>
 
-  <script>
-    window.onload = function () {
-      const urlParams = new URLSearchParams(window.location.search);
-      const searchInput = urlParams.get('bsearch');
-      if (searchInput) {
-        document.getElementById('bsearch').value = searchInput;
-        searchBooking();
-      }
-    }
-  </script>
 </body>
 
 </html>

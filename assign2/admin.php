@@ -1,7 +1,8 @@
 <?php
+// Include the database connection configuration file
 require_once "../../conf/sqlinfo.inc.php";
 
-// Get the database connection
+// Establish a database connection
 $conn = new mysqli($host, $username, $password, $database);
 
 // Check if the connection was successful
@@ -9,7 +10,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle the search request
 // Handle the search request
 if (isset($_GET["bsearch"])) {
     $bsearch = $_GET["bsearch"];
@@ -19,7 +19,6 @@ if (isset($_GET["bsearch"])) {
         die("Invalid booking reference number format");
     }
 
-    // Prepare the SQL query
     $sql = "SELECT * FROM BookingRequests WHERE ";
     if (empty($bsearch)) {
         $sql .= "pickup_date >= CURDATE() AND pickup_time BETWEEN CURTIME() AND DATE_ADD(CURTIME(), INTERVAL 2 HOUR) AND booking_status = 'unassigned' ORDER BY pickup_date, pickup_time";
@@ -42,12 +41,10 @@ if (isset($_GET["bsearch"])) {
     }
 }
 
-
 // Handle the assignment request
 if (isset($_GET["assign"])) {
     $assignRef = $_GET["assign"];
 
-    // Update the booking status in the database
     $sql = "UPDATE BookingRequests SET booking_status = 'assigned' WHERE booking_ref = '$assignRef'";
 
     if ($conn->query($sql) === true) {

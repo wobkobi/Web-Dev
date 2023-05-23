@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
@@ -8,6 +9,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 h1 {
   background-color: #ffc107;
   color: #fff;
@@ -15,6 +17,7 @@ h1 {
   text-align: center;
   margin: 0;
 }
+
 form.admin-search,
 form.declaration {
   width: 80%;
@@ -25,16 +28,19 @@ form.declaration {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 form.admin-search label,
 form.declaration label {
   display: block;
   margin: 10px 0;
   font-weight: 700;
 }
+
 .required {
   color: red;
   font-style: normal;
 }
+
 form.admin-search button,
 form.admin-search input,
 form.declaration input {
@@ -43,21 +49,25 @@ form.declaration input {
   border-radius: 5px;
   border: 1px solid #ddd;
 }
+
 form input[type="button"] {
   background-color: #ffc107;
   color: #fff;
   cursor: pointer;
   margin-top: 20px;
 }
+
 .admin-table .assignBtn:hover,
 form input[type="button"]:hover {
   background-color: #ffa000;
 }
+
 .admin-table {
   width: 100%;
   table-layout: fixed;
   background-color: #fff;
 }
+
 .admin-table td,
 .admin-table th {
   border: 1px solid #ddd;
@@ -69,11 +79,13 @@ form input[type="button"]:hover {
   vertical-align: middle;
   position: relative;
 }
+
 .admin-table th {
   background-color: #ffc107;
   color: #fff;
   font-size: 16px;
 }
+
 .admin-table .assignBtn {
   position: absolute;
   top: 0;
@@ -93,14 +105,17 @@ form input[type="button"]:hover {
   outline: 0;
   font-size: 16px;
 }
+
 .admin-table td {
   vertical-align: middle;
 }
+
 .admin-table .assignBtn:disabled {
   cursor: not-allowed;
   background-color: #ccc;
   color: #666;
 }
+
 #leftImage,
 #rightImage {
   position: fixed;
@@ -110,24 +125,29 @@ form input[type="button"]:hover {
   background: url(images/icon.gif) no-repeat center;
   background-size: contain;
 }
+
 #leftImage {
   left: 0;
 }
+
 #rightImage {
   right: 0;
   transform: scaleX(-1);
 }
+
 @media (max-width: 600px) {
   #leftImage,
   #rightImage {
     display: none;
   }
 }
+
 .content {
   width: 80%;
   max-width: 1000px;
   margin: 50px auto;
 }
+
 .success-message {
   background-color: #4caf50;
   color: #fff;
@@ -139,6 +159,7 @@ form input[type="button"]:hover {
   justify-content: center;
   align-items: center;
 }
+
 .error-message {
   background-color: #f44336;
   color: #fff;
@@ -150,6 +171,7 @@ form input[type="button"]:hover {
   justify-content: center;
   align-items: center;
 }
+
 ::placeholder {
   font-style: italic;
 }
@@ -165,12 +187,14 @@ form input[type="button"]:hover {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
+
 #reference h2,
 .success-message h2 {
   color: #333;
   font-size: 1.5em;
   margin-bottom: 20px;
 }
+
 #reference p,
 .success-message p {
   font-size: 1em;
