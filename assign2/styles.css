@@ -10,152 +10,96 @@ body {
 }
 h1 {
   background-color: #ffc107;
-  color: #ffffff;
+  color: #fff;
   padding: 20px 0;
   text-align: center;
   margin: 0;
 }
-form.declaration,
-form.admin-search {
+form.admin-search,
+form.declaration {
   width: 80%;
   max-width: 500px;
   margin: 50px auto;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-form.declaration label,
-form.admin-search label {
+form.admin-search label,
+form.declaration label {
   display: block;
   margin: 10px 0;
-<<<<<<< HEAD
   font-weight: 700;
-=======
-  font-weight: bold;
->>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
 }
-form.declaration input,
+.required {
+  color: red;
+  font-style: normal;
+}
+form.admin-search button,
 form.admin-search input,
-form.admin-search button {
+form.declaration input {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ddd;
 }
-<<<<<<< HEAD
 form input[type="button"] {
-=======
-
-form.declaration input[type="submit"],
-form.admin-search button[type="submit"] {
->>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
   background-color: #ffc107;
-  color: #ffffff;
+  color: #fff;
   cursor: pointer;
   margin-top: 20px;
 }
-<<<<<<< HEAD
+.admin-table .assignBtn:hover,
 form input[type="button"]:hover {
   background-color: #ffa000;
 }
-=======
-
-form.declaration input[type="submit"]:hover,
-form.admin-search button[type="submit"]:hover {
-  background-color: #ffa000;
-}
-
->>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
-#reference,
-.success-message {
-  width: 80%;
-  max-width: 500px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-<<<<<<< HEAD
-=======
-
->>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
-#reference h2,
-.success-message h2 {
-  color: #333;
-  font-size: 1.5em;
-  margin-bottom: 20px;
-}
-<<<<<<< HEAD
-=======
-
->>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
-#reference p,
-.success-message p {
-  font-size: 1em;
-  margin-bottom: 10px;
-}
-<<<<<<< HEAD
-=======
-
->>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
 .admin-table {
-  margin: auto;
-  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  background-color: #fff;
 }
-.admin-table th,
-.admin-table td {
+.admin-table td,
+.admin-table th {
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
+  word-wrap: break-word;
+  white-space: normal;
+  height: auto;
+  vertical-align: middle;
+  position: relative;
 }
 .admin-table th {
   background-color: #ffc107;
-  color: #ffffff;
+  color: #fff;
+  font-size: 16px;
 }
 .admin-table .assignBtn {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
   background-color: #ffc107;
-  color: #ffffff;
+  color: #fff;
   cursor: pointer;
-  border: 50px;
   font-weight: 700;
+  padding: 5px;
+  margin: 0;
+  box-sizing: border-box;
+  border: none;
+  outline: 0;
+  font-size: 16px;
 }
-.admin-table .assignBtn:hover {
-  background-color: #ffa000;
+.admin-table td {
+  vertical-align: middle;
 }
 .admin-table .assignBtn:disabled {
   cursor: not-allowed;
   background-color: #ccc;
   color: #666;
-}
-<<<<<<< HEAD
-=======
-
-.admin-table .assignBtn {
-  background-color: #ffc107;
-  color: white;
-  cursor: pointer;
-  border: 50px;
-
-  font-weight: bold;
-}
-
-.admin-table .assignBtn:hover {
-  background-color: #ffa000;
-}
-
-.admin-table .assignBtn:disabled {
-  cursor: not-allowed;
-  background-color: #ccc;
-  color: #666;
-}
-
->>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
-.required {
-  color: #ff0000;
-  font-style: normal;
 }
 #leftImage,
 #rightImage {
@@ -179,72 +123,56 @@ form.admin-search button[type="submit"]:hover {
     display: none;
   }
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
 .content {
   width: 80%;
   max-width: 1000px;
   margin: 50px auto;
 }
-<<<<<<< HEAD
 .success-message {
   background-color: #4caf50;
-  color: #ffffff;
+  color: #fff;
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 20px;
   overflow: hidden;
-=======
-
-.success-message {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  overflow: hidden; /* Added to keep content within bounds */
-  /* center */
->>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
   display: flex;
   justify-content: center;
   align-items: center;
 }
-<<<<<<< HEAD
 .error-message {
   background-color: #f44336;
-  color: #ffffff;
+  color: #fff;
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 20px;
   overflow: hidden;
-=======
-
-.error-message {
-  background-color: #f44336;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-
-  overflow: hidden; /* Added to keep content within bounds */
-  /* center */
->>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
   display: flex;
   justify-content: center;
   align-items: center;
 }
-<<<<<<< HEAD
 ::placeholder {
   font-style: italic;
 }
-=======
 
-::placeholder {
-  font-style: italic;
+#reference,
+.success-message {
+  width: 80%;
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
-::placeholder::after {
-  content: "...";
+#reference h2,
+.success-message h2 {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 20px;
 }
->>>>>>> 1ea1b2c8290a9422a237b3ca86957b9e7f4be0f8
+#reference p,
+.success-message p {
+  font-size: 1em;
+  margin-bottom: 10px;
+}
