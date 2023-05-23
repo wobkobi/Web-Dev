@@ -1,15 +1,5 @@
 // Initialize input object to store form values
-const input = {
-	cname: "",
-	phone: "",
-	unumber: "",
-	snumber: "",
-	stname: "",
-	sbname: "",
-	dsbname: "",
-	date: "",
-	time: ""
-};
+const input = { cname: "", phone: "", unumber: "", snumber: "", stname: "", sbname: "", dsbname: "", date: "", time: "" };
 
 // Function to get the value of an input element by its name
 const getElementValue = (key) =>
