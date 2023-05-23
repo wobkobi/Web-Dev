@@ -17,14 +17,7 @@ function validate() {
 	}
 
 	// Check if required fields are filled
-	if (
-		!input.cname ||
-		!input.phone ||
-		!input.snumber ||
-		!input.stname ||
-		!input.date ||
-		!input.time
-	) {
+	if (!input.cname || !input.phone || !input.snumber || !input.stname || !input.date || !input.time) {
 		alert("Please fill in all required fields");
 		return false;
 	}
@@ -36,7 +29,7 @@ function validate() {
 	// Current date and time
 	const now = new Date();
 	const inputDate = new Date(`${input.date}T${input.time}`);
-
+	console.log(inputDate)
 	// Validate phone number format
 	if (!phoneRegex.test(input.phone)) {
 		alert("Invalid phone number. Please enter a 10-digit phone number");
@@ -51,6 +44,8 @@ function validate() {
 
 	// Clean up input values and update the form
 	for (const key in input) {
+		// inless its date or time 
+		if (key === "date" || key === "time") continue;
 		input[key] = input[key].replace(nonAlphanumericRegex, "");
 		setElementValue(key, input[key]);
 	}
@@ -137,6 +132,5 @@ function load() {
 	dateInput.value = `${year}-${month}-${date}`;
 	timeInput.value = `${hours}:${minutes}`;
 }
-
 // Register the load function to be executed when the window is loaded
 window.onload = load;
