@@ -29,7 +29,6 @@ function validate() {
 	// Current date and time
 	const now = new Date();
 	const inputDate = new Date(`${input.date}T${input.time}`);
-	console.log(inputDate)
 	// Validate phone number format
 	if (!phoneRegex.test(input.phone)) {
 		alert("Invalid phone number. Please enter a 10-digit phone number");
@@ -133,4 +132,4 @@ function load() {
 	timeInput.value = `${hours}:${minutes}`;
 }
 // Register the load function to be executed when the window is loaded
-window.onload = load;
+window.onload = load();
