@@ -1,3 +1,5 @@
+<!-- Harrison Raynes 20121017
+The server-side PHP file for processing booking form submissions. -->
 <?php
 ob_start();
 

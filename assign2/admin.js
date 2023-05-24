@@ -1,3 +1,6 @@
+// Harrison Raynes 20121017
+// The JavaScript file for handling admin panel functionality.
+
 // Function to handle form submission
 function submitSearch(e) {
   e.preventDefault();

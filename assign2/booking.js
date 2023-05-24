@@ -1,3 +1,6 @@
+// Harrison Raynes 20121017
+// The JavaScript file for handling booking form functionality.
+
 // Initialize input object to store form values
 const input = { cname: "", phone: "", unumber: "", snumber: "", stname: "", sbname: "", dsbname: "", date: "", time: "" };
 
