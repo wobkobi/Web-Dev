@@ -1,6 +1,6 @@
-<!-- Harrison Raynes 20121017
-The server-side PHP file for processing booking form submissions. -->
 <?php
+// Harrison Raynes 20121017
+// The server-side PHP file for processing booking form submissions.
 ob_start();
 
 // Include the database connection configuration file
@@ -50,23 +50,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $booking_ref = "BRN" . str_pad($last_id, 5, "0", STR_PAD_LEFT);
 
     // Prepare the INSERT statement
-    $stmt = $conn->prepare("INSERT INTO BookingRequests (booking_ref, cname, phone, unumber, snumber, stname, sbname, dsbname, pickup_date, pickup_time)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO BookingRequests (booking_ref, cname, phone, unumber, snumber, stname, sbname, dsbname, pickup_date, pickup_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Bind the parameters to the prepared statement
-    $stmt->bind_param(
-      "ssssssssss",
-      $booking_ref,
-      $cname,
-      $phone,
-      $unumber,
-      $snumber,
-      $stname,
-      $sbname,
-      $dsbname,
-      $pickup_date,
-      $pickup_time
-    );
+    $stmt->bind_param("ssssssssss", $booking_ref, $cname, $phone, $unumber, $snumber, $stname, $sbname, $dsbname, $pickup_date, $pickup_time);
 
     // Retrieve form data from $_POST array
     $cname = $_POST["cname"];

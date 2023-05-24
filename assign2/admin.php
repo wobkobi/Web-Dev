@@ -1,7 +1,6 @@
-<!-- Harrison Raynes 20121017
-The server-side PHP file for processing admin panel requests. -->
 <?php
-
+// Harrison Raynes 20121017
+// The server-side PHP file for processing admin panel requests.
 // Include the database connection configuration file
 require_once "../../conf/sqlinfo.inc.php";
 

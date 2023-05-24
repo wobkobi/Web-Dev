@@ -95,7 +95,7 @@ function displaySearchResults(data) {
           <td>${booking.booking_ref}</td>
           <td>${booking.cname}</td>
           <td>${formattedPhone}</td>
-          <td>${booking.snumber} ${booking.stname} ${booking.sbname}</td>
+          <td>${booking.sbname}</td>
           <td>${booking.dsbname}</td>
           <td>${formattedDate.replace(",", "")}</td>
           <td>${booking.booking_status}</td>
@@ -128,14 +128,17 @@ function assignBooking(e) {
       e.target.disabled = true;
       const statusCell = e.target.parentNode.previousElementSibling;
       statusCell.textContent = "assigned";
+      e.target.parentElement.parentElement.style.backgroundColor = "#a0ffa0";
     }
     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 400) {
       const response = xhr.responseText;
       showError(response);
+      e.target.parentElement.parentElement.style.backgroundColor = "#ffa0a0";
     }
   };
   xhr.send();
 }
+
 
 // Function to display success message
 function showConfirmation(message) {

@@ -56,7 +56,7 @@ function validate() {
 }
 
 // Form submission function
-async function submitBooking(e) {
+function submitBooking(e) {
 	if (e) e.preventDefault();
 	if (!validate()) return;
 
@@ -71,26 +71,26 @@ async function submitBooking(e) {
 	// Create request body
 	const requestBody = new URLSearchParams([...formData.entries()]).toString();
 
-	try {
-		// Send POST request to the server
-		const response = await fetch("booking.php", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded"
-			},
-			body: requestBody
-		});
-
-		// Handle the response if it is successful
-		if (response.ok) {
-			const data = await response.json();
+	// Create new XMLHttpRequest
+	const xhr = new XMLHttpRequest();
+	xhr.open("POST", "booking.php", true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.onload = function () {
+		if (xhr.status === 200) {
+			console.log(xhr.responseText)
+			const data = JSON.parse(xhr.responseText);
 			changeContent(data);
 			clearForm();
+		} else {
+			console.error("Error: ", xhr.status, xhr.statusText);
 		}
-	} catch (error) {
-		console.log("Error: ", error);
-	}
+	};
+	xhr.onerror = function () {
+		console.error("Request failed");
+	};
+	xhr.send(requestBody);
 }
+
 
 // Function to clear the form
 function clearForm() {
@@ -122,17 +122,25 @@ function changeContent(response) {
 
 // Function to initialize form values with current date and time
 function load() {
-	const now = new Date();
 	const dateInput = document.querySelector("#date");
 	const timeInput = document.querySelector("#time");
-	const year = now.getFullYear();
-	const month = ("0" + (now.getMonth() + 1)).slice(-2);
-	const date = ("0" + now.getDate()).slice(-2);
-	const hours = ("0" + now.getHours()).slice(-2);
-	const minutes = ("0" + now.getMinutes()).slice(-2);
 
-	dateInput.value = `${year}-${month}-${date}`;
-	timeInput.value = `${hours}:${minutes}`;
+	function updateDateTime() {
+		const now = new Date();
+		const year = now.getFullYear();
+		const month = ("0" + (now.getMonth() + 1)).slice(-2);
+		const date = ("0" + now.getDate()).slice(-2);
+		const hours = ("0" + now.getHours()).slice(-2);
+		const minutes = ("0" + now.getMinutes()).slice(-2);
+
+		dateInput.value = `${year}-${month}-${date}`;
+		timeInput.value = `${hours}:${minutes}`;
+	}
+
+	updateDateTime();
+
+	setInterval(updateDateTime, 1);
 }
+
 // Register the load function to be executed when the window is loaded
 window.onload = load();
