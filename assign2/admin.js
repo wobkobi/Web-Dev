@@ -55,25 +55,24 @@ function displaySearchResults(data) {
   contentDiv.innerHTML = "";
 
   let html = `
-    <table class="admin-table">
-      <tr>
-        <th>Booking reference number</th>
-        <th>Customer name</th>
-        <th>Phone</th>
-        <th>Pickup suburb</th>
-        <th>Destination suburb</th>
-        <th>Pickup date and time</th>
-        <th>Status</th>
-        <th>Assign</th>
-      </tr>`;
+   <table class="admin-table">
+     <tr>
+       <th>Booking reference number</th>
+       <th>Customer name</th>
+       <th>Phone</th>
+       <th>Pickup suburb</th>
+       <th>Destination suburb</th>
+       <th>Pickup date and time</th>
+       <th>Status</th>
+       <th>Assign</th>
+     </tr>`;
 
   if (data.error) {
     html += `
-      <tr>
-        <td colspan="8">No bookings found.</td>
-      </tr>`;
-  }
-  else {
+     <tr>
+       <td colspan="8">No bookings found.</td>
+     </tr>`;
+  } else {
     data.forEach(function (booking) {
       const inputDate = new Date(`${booking.pickup_date}T${booking.pickup_time}`);
       const formattedDate = inputDate.toLocaleDateString("en-NZ", {
@@ -91,18 +90,18 @@ function displaySearchResults(data) {
       }
 
       html += `
-        <tr>
-          <td>${booking.booking_ref}</td>
-          <td>${booking.cname}</td>
-          <td>${formattedPhone}</td>
-          <td>${booking.snumber} ${booking.stname} ${booking.sbname}</td>
-          <td>${booking.dsbname}</td>
-          <td>${formattedDate.replace(",", "")}</td>
-          <td>${booking.booking_status}</td>
-          <td>
-            <button class="assignBtn" data-ref="${booking.booking_ref}" ${booking.booking_status === "assigned" ? "disabled" : ""}>Assign</button>
-          </td>
-        </tr>`;
+       <tr>
+         <td>${booking.booking_ref}</td>
+         <td>${booking.cname}</td>
+         <td>${formattedPhone}</td>
+         <td>${booking.sbname}</td>
+         <td>${booking.dsbname}</td>
+         <td>${formattedDate.replace(",", "")}</td>
+         <td>${booking.booking_status}</td>
+         <td>
+           <button class="assignBtn" data-ref="${booking.booking_ref}" ${booking.booking_status === "assigned" ? "disabled" : ""}>Assign</button>
+         </td>
+       </tr>`;
     });
   }
 
@@ -128,14 +127,17 @@ function assignBooking(e) {
       e.target.disabled = true;
       const statusCell = e.target.parentNode.previousElementSibling;
       statusCell.textContent = "assigned";
+      e.target.parentElement.parentElement.style.backgroundColor = "#a0ffa0";
     }
     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 400) {
       const response = xhr.responseText;
       showError(response);
+      e.target.parentElement.parentElement.style.backgroundColor = "#ffa0a0";
     }
   };
   xhr.send();
 }
+
 
 // Function to display success message
 function showConfirmation(message) {
@@ -167,4 +169,4 @@ function load() {
 }
 
 // Register the load function to be executed when the window is loaded
-window.onload = load;
+window.onload = load();

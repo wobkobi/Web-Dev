@@ -2,7 +2,17 @@
 // The JavaScript file for handling booking form functionality.
 
 // Initialize input object to store form values
-const input = { cname: "", phone: "", unumber: "", snumber: "", stname: "", sbname: "", dsbname: "", date: "", time: "" };
+const input = {
+	cname: "",
+	phone: "",
+	unumber: "",
+	snumber: "",
+	stname: "",
+	sbname: "",
+	dsbname: "",
+	date: "",
+	time: ""
+};
 
 // Function to get the value of an input element by its name
 const getElementValue = (key) =>
@@ -56,7 +66,7 @@ function validate() {
 }
 
 // Form submission function
-async function submitBooking(e) {
+function submitBooking(e) {
 	if (e) e.preventDefault();
 	if (!validate()) return;
 
@@ -71,26 +81,26 @@ async function submitBooking(e) {
 	// Create request body
 	const requestBody = new URLSearchParams([...formData.entries()]).toString();
 
-	try {
-		// Send POST request to the server
-		const response = await fetch("booking.php", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded"
-			},
-			body: requestBody
-		});
-
-		// Handle the response if it is successful
-		if (response.ok) {
-			const data = await response.json();
+	// Create new XMLHttpRequest
+	const xhr = new XMLHttpRequest();
+	xhr.open("POST", "booking.php", true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.onload = function () {
+		if (xhr.status === 200) {
+			console.log(xhr.responseText)
+			const data = JSON.parse(xhr.responseText);
 			changeContent(data);
 			clearForm();
+		} else {
+			console.error("Error: ", xhr.status, xhr.statusText);
 		}
-	} catch (error) {
-		console.log("Error: ", error);
-	}
+	};
+	xhr.onerror = function () {
+		console.error("Request failed");
+	};
+	xhr.send(requestBody);
 }
+
 
 // Function to clear the form
 function clearForm() {
@@ -117,22 +127,44 @@ function changeContent(response) {
 	const referenceElement = document.getElementById("reference");
 	referenceElement.innerHTML = `<h2>Thank you for your booking!</h2><p>Booking reference number: ${ref}</p><p>Pickup time: ${time}</p><p>Pickup date: ${formattedDate}</p>`;
 	referenceElement.removeAttribute("hidden");
-	referenceElement.scrollIntoView({ behavior: "smooth" });
+	referenceElement.scrollIntoView({
+		behavior: "smooth"
+	});
 }
 
 // Function to initialize form values with current date and time
 function load() {
-	const now = new Date();
 	const dateInput = document.querySelector("#date");
 	const timeInput = document.querySelector("#time");
-	const year = now.getFullYear();
-	const month = ("0" + (now.getMonth() + 1)).slice(-2);
-	const date = ("0" + now.getDate()).slice(-2);
-	const hours = ("0" + now.getHours()).slice(-2);
-	const minutes = ("0" + now.getMinutes()).slice(-2);
+	let timerId;
 
-	dateInput.value = `${year}-${month}-${date}`;
-	timeInput.value = `${hours}:${minutes}`;
+	// Function to update the time input value with the current time
+	function updateDateTime() {
+		const now = new Date();
+		const year = now.getFullYear();
+		const month = ("0" + (now.getMonth() + 1)).slice(-2);
+		const date = ("0" + now.getDate()).slice(-2);
+		const hours = ("0" + now.getHours()).slice(-2);
+		const minutes = ("0" + now.getMinutes()).slice(-2);
+		dateInput.value = `${year}-${month}-${date}`;
+		timeInput.value = `${hours}:${minutes}`;
+	}
+
+	// Function to start the timer for updating the time input
+	function startTimer() {
+		timerId = setInterval(updateDateTime, 100);
+	}
+
+	// Function to stop the timer for updating the time input
+	function stopTimer() {
+		clearInterval(timerId);
+	}
+
+	updateDateTime();
+	startTimer();
+	timeInput.addEventListener("focus", stopTimer);
 }
+
+
 // Register the load function to be executed when the window is loaded
 window.onload = load();
