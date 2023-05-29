@@ -1,70 +1,54 @@
 <?php
 session_start();
-
+header('Content-Type: text/xml');
+?>
+<?php
+$newitem = $_GET["book"];
 $action = $_GET["action"];
-$title = $_GET["title"];
-$isbn = $_GET["isbn"];
-
+//if ($_SESSION["Cart"] != "")
 if (array_key_exists("Cart", $_SESSION)) {
-  $cart = $_SESSION["Cart"];
-
-  if ($action == "Add") {
-    if (isset($cart[$isbn])) {
-      $cart[$isbn]["quantity"]++;
+    $cart1 = $_SESSION["Cart"];
+    if ($action == "Add") {
+        if ($cart1[$newitem] != "") {
+            $value = $cart1[$newitem] + 1;
+            $cart1[$newitem] = $value;
+        } else {
+            $cart1[$newitem] = "1";
+        }
     } else {
-      $cart[$isbn] = array(
-        "title" => $title,
-        "quantity" => 1
-      );
+        $cart1[$newitem] = "";
     }
-  } elseif ($action == "Remove") {
-    if (isset($cart[$isbn])) {
-      $cart[$isbn]["quantity"]--;
+} else {
+    $cart1[$newitem] = "1";
+}
+$_SESSION["Cart"] = $cart1;
+if ($cart1[$newitem] != "")
+    echo (toXml($cart1));
 
-      if ($cart[$isbn]["quantity"] <= 0) {
-        unset($cart[$isbn]);
-      }
+function toXml($cart1)
+{
+    $doc = new DomDocument('1.0');
+    $cart = $doc->createElement('cart');
+    $cart = $doc->appendChild($cart);
+
+    foreach ($cart1 as $a => $b) {
+
+        $book = $doc->createElement('book');
+        $book = $cart->appendChild($book);
+
+        $title = $doc->createElement('title');
+        $title = $book->appendChild($title);
+        $value = $doc->createTextNode($a);
+        $value = $title->appendChild($value);
+
+        $quantity = $doc->createElement('quantity');
+        $quantity = $book->appendChild($quantity);
+        $value2 = $doc->createTextNode($b);
+        $value2 = $quantity->appendChild($value2);
+
     }
-  }
 
-  $_SESSION["Cart"] = $cart;
-
-  echo toXml($cart);
-}
-
-function toXml($cart) {
-  $doc = new DomDocument('1.0');
-  $cartElement = $doc->createElement('cart');
-  $cartElement = $doc->appendChild($cartElement);
-
-  foreach ($cart as $isbn => $book) {
-    $bookElement = $doc->createElement('book');
-    $bookElement = $cartElement->appendChild($bookElement);
-
-    $titleElement = $doc->createElement('title');
-    $titleElement->appendChild($doc->createTextNode($book["title"]));
-    $bookElement->appendChild($titleElement);
-
-    $quantityElement = $doc->createElement('quantity');
-    $quantityElement->appendChild($doc->createTextNode($book["quantity"]));
-    $bookElement->appendChild($quantityElement);
-
-    $isbnElement = $doc->createElement('isbn');
-    $isbnElement->appendChild($doc->createTextNode($isbn));
-    $bookElement->appendChild($isbnElement);
-
-    $priceElement = $doc->createElement('price');
-    $priceElement->appendChild($doc->createTextNode(getPriceByISBN($isbn)));
-    $bookElement->appendChild($priceElement);
-  }
-
-  $strXml = $doc->saveXML();
-  return $strXml;
-}
-
-function getPriceByISBN($isbn) {
-  // You can implement a function or fetch the price from a database using the ISBN
-  // For simplicity, let's return a fixed price for all books
-  return "39.99";
+    $strXml = $doc->saveXML();
+    return $strXml;
 }
 ?>

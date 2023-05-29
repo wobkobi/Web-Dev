@@ -1,53 +1,47 @@
 var xHRObject = false;
-if (window.XMLHttpRequest)
-{
-xHRObject = new XMLHttpRequest();
+if (window.XMLHttpRequest) {
+    xHRObject = new XMLHttpRequest();
 }
-else if (window.ActiveXObject)
-{
-xHRObject = new ActiveXObject("Microsoft.XMLHTTP");
+else if (window.ActiveXObject) {
+    xHRObject = new ActiveXObject("Microsoft.XMLHTTP");
 }
 
 
-function getData()
-{
-    if ((xHRObject.readyState == 4) &&(xHRObject.status == 200))
-    {
+function getData() {
+    if ((xHRObject.readyState == 4) && (xHRObject.status == 200)) {
         // var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}'); 
-		
-		var spantag = document.getElementById("cart");
-		
-		var serverResponse;
-		if (xHRObject.responseText!="") serverResponse= JSON.parse(xHRObject.responseText);
-		else serverResponse=null;
-		
-		// alert(keys[0]);
-		// alert(serverResponse[keys[0]]);
-		
-		
-		if (serverResponse != null){
-			
-			var keys = Object.keys(serverResponse);
-			spantag.innerHTML = "";
-            
-			
-            if (window.ActiveXObject)
-            {
-                spantag.innerHTML += " " +keys[0];
+
+        var spantag = document.getElementById("cart");
+
+        var serverResponse;
+        if (xHRObject.responseText != "") serverResponse = JSON.parse(xHRObject.responseText);
+        else serverResponse = null;
+
+        // alert(keys[0]);
+        // alert(serverResponse[keys[0]]);
+
+
+        if (serverResponse != null) {
+
+            var keys = Object.keys(serverResponse);
+            spantag.innerHTML = "";
+
+
+            if (window.ActiveXObject) {
+                spantag.innerHTML += " " + keys[0];
                 spantag.innerHTML += " " + serverResponse[keys[0]] + " " + "<a href='#' onclick='AddRemoveItem(\"Remove\");'>Remove Item</a>";
             }
-            else
-            {
-                spantag.innerHTML += " " +keys[0];
+            else {
+                spantag.innerHTML += " " + keys[0];
                 spantag.innerHTML += " " + serverResponse[keys[0]] + " " + "<a href='#' onclick='AddRemoveItem(\"Remove\");'>Remove Item</a>";
             }
-        
+
         }
-        else{  spantag.innerHTML = ""; }
-		
-		
-		
-		/*
+        else { spantag.innerHTML = ""; }
+
+
+
+        /*
 
         var spantag = document.getElementById("cart");
 
@@ -74,22 +68,19 @@ function getData()
     }
 }
 
-function AddRemoveItem(action)
-{
-          var book  = document.getElementById("book").innerHTML;
-           
-          if(action=="Add")
-          {
-            //xHRObject.open("GET", "ManageCartJson.php?action=" + action + "&book=" + encodeURIComponent(book) + "&value=" + Number(new Date), true);
-			            xHRObject.open("GET", "test.php?action=" + action + "&book=" + encodeURIComponent(book) + "&value=" + Number(new Date), true);
-          }
-          else
-          {
-           xHRObject.open("GET", "test.php?action=" + action + "&book=" + encodeURIComponent(book) + "&value="  + Number(new Date), true);
-          }
+function AddRemoveItem(action) {
+    var book = document.getElementById("book").innerHTML;
 
-          xHRObject.onreadystatechange = getData;
-          xHRObject.send(null);   
+    if (action == "Add") {
+        //xHRObject.open("GET", "ManageCartJson.php?action=" + action + "&book=" + encodeURIComponent(book) + "&value=" + Number(new Date), true);
+        xHRObject.open("GET", "test.php?action=" + action + "&book=" + encodeURIComponent(book) + "&value=" + Number(new Date), true);
+    }
+    else {
+        xHRObject.open("GET", "test.php?action=" + action + "&book=" + encodeURIComponent(book) + "&value=" + Number(new Date), true);
+    }
+
+    xHRObject.onreadystatechange = getData;
+    xHRObject.send(null);
 }
 
 
